@@ -1,3 +1,5 @@
+#Run this file to test the program
+
 import sys
 import random
 import pickle
