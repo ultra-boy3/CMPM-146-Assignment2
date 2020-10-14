@@ -44,25 +44,31 @@ def find_path (source_point, destination_point, mesh):
     return None
     """
 
+    path = []
+    boxes = {}
+    path_taken = []
+
     frontier = []
     heapq.heapify(frontier) #Not sure but a different queue type might be better?
     heapq.heappush(frontier, source_point)
 
-    came_from = {}
-    came_from[source_point] = None
+    boxes[source_point] = None
 
     while(len(frontier) > 0):
         current_box = heapq.heappop(frontier)
 
-        if current_box = destination_point:
-            path_taken = []
-            add_this = destination_point
-            while(add_this != None):
-                path_taken.append(add_this)
-                add_this = came_from[add_this]
+        if current_box == destination_point:
+            # Insert current_box into boxes, w/ previous as value
+            while(current_box != None):
+                path_taken.append(current_box)
+                current_box = boxes[current_box] #destination point should already have something in boxes
+            break
 
+        neighbors = mesh(current_box)[1] #Hopefully this gets the neighbor list?
+        for neighbor in neighbors:
+            if(neighbor not in boxes):
+                boxes[neighbor] = current_box #Add neighbor to list of boxes
+                heapq.heappush(frontier, neighbor)
 
-    path = []
-    boxes = {}
-
-    return path, boxes.keys()
+    print(path_taken)
+    return path, path_taken #Replaced boxes.keys() w/ path_taken
