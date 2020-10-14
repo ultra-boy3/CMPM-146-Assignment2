@@ -1,3 +1,4 @@
+import heapq
 
 def find_path (source_point, destination_point, mesh):
     #Mesh is a dictionary with box dimensions and lists of adjacent boxes
@@ -42,6 +43,24 @@ def find_path (source_point, destination_point, mesh):
     (did not find a path)
     return None
     """
+
+    frontier = []
+    heapq.heapify(frontier) #Not sure but a different queue type might be better?
+    heapq.heappush(frontier, source_point)
+
+    came_from = {}
+    came_from[source_point] = None
+
+    while(len(frontier) > 0):
+        current_box = heapq.heappop(frontier)
+
+        if current_box = destination_point:
+            path_taken = []
+            add_this = destination_point
+            while(add_this != None):
+                path_taken.append(add_this)
+                add_this = came_from[add_this]
+
 
     path = []
     boxes = {}
